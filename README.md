@@ -2,6 +2,8 @@
 
 A complete, responsive redesign built with plain HTML, CSS, and JavaScript. No installation, build process, paid hosting, or API keys required.
 
+The latest presentation adds an editorial homepage with layered photographs, an accessible five-scene photo tour, clickable school-life photographs, larger reading text, and reduced-motion-aware transitions. These additions are in `assets/experience.css` and `assets/experience.js`; upload those files along with the rest of `assets`.
+
 ## Preview
 
 Open `index.html` in a browser. All pages and interactions work locally. Alternatively, run `python -m http.server 8080` in this folder and visit http://localhost:8080.

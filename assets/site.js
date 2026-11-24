@@ -1,21 +1,36 @@
 'use strict';
 // No dependencies, trackers, API keys, or server required.
+document.documentElement.classList.remove('no-js');
 const $ = (selector, scope = document) => scope.querySelector(selector);
 const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
 $$('[data-year]').forEach(el => el.textContent = new Date().getFullYear());
 const toggle = $('.menu-toggle');
 const nav = $('#main-nav');
+function setMenu(open) {
+  toggle?.setAttribute('aria-expanded', String(open));
+  nav?.classList.toggle('is-open', open);
+  document.body.classList.toggle('menu-is-open', open);
+  document.querySelector('main')?.toggleAttribute('inert', open);
+  document.querySelector('footer')?.toggleAttribute('inert', open);
+}
 function closeMenu(focus = false) {
-  toggle?.setAttribute('aria-expanded', 'false');
-  nav?.classList.remove('is-open');
+  setMenu(false);
   if (focus) toggle?.focus();
 }
 toggle?.addEventListener('click', () => {
   const open = toggle.getAttribute('aria-expanded') !== 'true';
-  toggle.setAttribute('aria-expanded', String(open));
-  nav.classList.toggle('is-open', open);
+  setMenu(open);
 });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(true); });
+document.addEventListener('keydown', e => {
+  if (toggle?.getAttribute('aria-expanded') !== 'true') return;
+  if (e.key === 'Escape') { e.preventDefault(); closeMenu(true); }
+  if (e.key === 'Tab') {
+    const items = [toggle, ...$$('a', nav)].filter(el => el.getClientRects().length);
+    const first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+});
 document.addEventListener('click', e => { if (!e.target.closest('.site-header')) closeMenu(); });
 nav?.addEventListener('click', e => { if (e.target.closest('a')) closeMenu(); });
 window.matchMedia('(min-width:901px)').addEventListener('change', () => closeMenu());
@@ -76,10 +91,15 @@ if (estimator) {
 }
 const form = $('#contact-form');
 if (form) {
+  $('button[type="submit"]', form).disabled = false;
   const reason = new URLSearchParams(location.search).get('reason');
   if (['tour','enrollment','general'].includes(reason)) $('#reason').value = reason;
   form.addEventListener('submit', e => {
     e.preventDefault();
+    for (const id of ['name', 'message']) {
+      const input = document.getElementById(id);
+      input.setCustomValidity(input.value.trim() ? '' : 'Please enter a name or message.');
+    }
     if (!form.reportValidity()) return;
     const data = new FormData(form);
     const subject = {tour:'Campus tour request',enrollment:'Enrollment question',general:'Website inquiry'}[data.get('reason')] || 'Website inquiry';
@@ -89,6 +109,7 @@ if (form) {
     $('#email-preview').hidden = false;
     $('#email-draft').focus();
   });
+  form.addEventListener('input', e => { if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) e.target.setCustomValidity(''); });
   $('#copy-email').addEventListener('click', async () => {
     try { await navigator.clipboard.writeText($('#email-draft').value); $('#copy-status').textContent = 'Copied. Paste this draft into your email app to send it.'; }
     catch { $('#email-draft').focus(); $('#email-draft').select(); $('#copy-status').textContent = 'Select the draft above and use Copy in your browser or keyboard.'; }

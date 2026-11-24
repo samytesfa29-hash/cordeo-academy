@@ -30,7 +30,11 @@
     {src:'girls-reading-together',alt:'Two Cor Deo students sharing a book',category:'CURIOSITY, SHARED',title:'A little discovery goes a long way.',story:'Learning is full of small moments: a page, a question, a new connection. Here is one glimpse of students learning together.'},
     {src:'classroom-lesson',alt:'A teacher leading a lesson in a Cor Deo classroom',category:'THE CLASSROOM CONNECTION',title:'Together, the learning begins.',story:'Campus days connect students with their teachers and peers. Teacher-prepared assignments carry that learning into home days.'},
     {src:'students-on-the-stairs',alt:'A teacher and Cor Deo students gathered on the school stairs',category:'OUR SCHOOL COMMUNITY',title:'More than a place to study.',story:'Teachers, students, and families share the work of growing in knowledge, character, and faith.'},
-    {src:'students-outside-the-school',alt:'Students gathered outside Cor Deo Christian Academy',category:'COME MEET US',title:'Picture your next chapter here.',story:'A photograph is just a beginning. Visit campus, meet the principal, and ask the questions that matter to your family.'}
+    {src:'students-outside-the-school',alt:'Students gathered outside Cor Deo Christian Academy',category:'COME MEET US',title:'Picture your next chapter here.',story:'A photograph is just a beginning. Visit campus, meet the principal, and ask the questions that matter to your family.'},
+    {src:'student-on-playground-rings',alt:'A student reaching for rings on the school playground',category:'A LITTLE COURAGE',title:'Reach a little further.',story:'School days include everyday chances to try, play, and spend time together.'},
+    {src:'boys-in-the-gym',alt:'Five students smiling together in the school gym',category:'ROOM FOR FRIENDSHIP',title:'A place among friends.',story:'The school community is part of the experience: shared learning and shared moments across the week.'},
+    {src:'game-in-the-gym',alt:'Cor Deo students taking part in a game in the gym',category:'TIME TOGETHER',title:'Room to play, too.',story:'A glimpse of students taking part in an activity together in the school gym.'},
+    {src:'girl-on-the-slide',alt:'A Cor Deo student playing on a slide',category:'EVERYDAY JOY',title:'The little moments matter.',story:'A school is made up of many moments. Come visit and experience the community for yourself.'}
   ];
   let index = 0;
   const image = document.getElementById('tour-image');
@@ -52,7 +56,7 @@
     dialog.showModal();
     document.body.classList.add('tour-is-open');
   }
-  document.querySelectorAll('[data-open-tour]').forEach(button => button.addEventListener('click', () => openTour()));
+  document.querySelectorAll('[data-open-tour]').forEach(button => button.addEventListener('click', () => openTour(Number(button.dataset.tourStart) || 0)));
   dialog.querySelector('[data-close-tour]').addEventListener('click', () => dialog.close());
   dialog.addEventListener('close', () => document.body.classList.remove('tour-is-open'));
   dialog.querySelector('[data-tour-next]').addEventListener('click', () => showPhoto(index + 1));

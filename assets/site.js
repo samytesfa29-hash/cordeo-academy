@@ -66,15 +66,16 @@ if (upcoming) {
   rows.forEach(row => { row.hidden = row.dataset.eventEnd < today || count >= 3; if (!row.hidden) count++; });
   if (!count) { const p = document.createElement('p'); p.textContent = 'The published school year has ended. Contact the office for the next calendar.'; upcoming.append(p); }
 }
-$$('[data-filter]').forEach(button => button.addEventListener('click', () => {
-  const filter = button.dataset.filter;
-  $$('[data-filter]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
+function filterCalendar(filter) {
+  $$('[data-filter]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.filter === filter)));
   const events = $$('#school-events [data-event-date]');
   let count = 0;
-  events.forEach(row => { row.hidden = filter === 'upcoming' ? row.dataset.eventEnd < today : filter === 'breaks' ? row.dataset.eventType !== 'No school' : false; if (!row.hidden) count++; });
+  events.forEach(row => { row.hidden = filter === 'upcoming' ? row.dataset.eventEnd < today : filter === 'past' ? row.dataset.eventEnd >= today : filter === 'breaks' ? row.dataset.eventType !== 'No school' || row.dataset.eventEnd < today : false; if (!row.hidden) count++; });
   const empty = $('.calendar-empty'); if (empty) empty.hidden = count > 0;
-  const status = $('[data-calendar-status]'); if (status) status.textContent = `Showing ${count} ${filter === 'all' ? 'school-year' : filter === 'breaks' ? 'no-school' : 'upcoming'} dates.`;
-}));
+  const status = $('[data-calendar-status]'); if (status) status.textContent = `Showing ${count} ${filter === 'all' ? 'school-year' : filter === 'past' ? 'past' : filter === 'breaks' ? 'upcoming no-school' : 'upcoming'} dates.`;
+}
+$$('[data-filter]').forEach(button => button.addEventListener('click', () => filterCalendar(button.dataset.filter)));
+if ($('#school-events')) filterCalendar('upcoming');
 const estimator = $('[data-estimator]');
 if (estimator) {
   const money = new Intl.NumberFormat('en-US', {style:'currency',currency:'USD',maximumFractionDigits:0});

@@ -1,37 +1,30 @@
-# Review of the GitHub Pages preview
+# Review of the revised website
 
-Preview: https://samytesfa29-hash.github.io/cordeo-academy/
+## Native browser checks
 
-## Checked on the live preview
+The actual generated website was rendered in Microsoft Edge with isolated test profiles. These local browser checks used the same fonts, styles, scripts, photographs, and documents as the delivery files.
 
-- Styles and visible school photographs loaded.
-- Weekly schedule changed by mouse and keyboard arrow keys.
-- Mobile menu opened and closed with Escape.
-- FAQ answers expanded.
-- Calendar filters returned nine no-school events and eleven remaining events on the review date, November 23, 2026 (Portland time).
-- Tuition estimate: two K–6 students and one 7–8 student returned $16,865 under the displayed assumptions; zero students returned $0 and guidance.
-- Contact form prepared a campus-tour draft with synthetic test data. No email was sent.
-- Phone-width layout checks covered 320px and 375px. The 320px homepage headline clipped; corrected in this package. Other checked main pages had no measured horizontal page overflow at 320px.
-- No JavaScript errors were reported during the checked interactions.
+Seven views passed with no measured horizontal page overflow, clipped critical text, broken images, or resource errors:
 
-## Changes in this package
+- Homepage: 1440px desktop and 320px phone viewport.
+- Admissions, School Life, Our Approach, Our Faith, and Support: 320px phone viewport.
 
-- Smaller headline on the narrowest phones.
-- Mobile menu contains keyboard focus, prevents background scrolling, and makes background content inactive while open.
-- Navigation remains available if JavaScript is unavailable.
-- Email preparation is disabled until its handler is ready, preventing accidental ordinary form submission. Whitespace-only name/message entries are rejected.
-- Contact page also links to the school's existing online form. The bottom learning link now leads to the school-week explanation.
-- Local images reduced in size; sharing images now have a complete public URL.
-- The 404 page resolves its resources against the known GitHub Pages location.
+Twenty-eight native interaction checks passed across those views. Checks covered hero photograph selection, the native photo dialog opening and advancing, returning focus after closing, grade-guide updates, keyboard-operated week tabs, and mobile menu opening, background inactivity, Escape behavior, and focus restoration.
 
-## Release status
+Desktop and phone renders were visually inspected. The design uses actual school photographs; home-day panels use clearly labeled illustrations rather than relabeling campus photos as home settings.
 
-The presentation update adds `experience.css` and `experience.js`. Twelve DOM interaction checks passed for opening the photo tour, advancing and wrapping scenes, keyboard navigation, closing and restoring scrolling, opening gallery-selected scenes, preserving gallery structure, and initializing on other pages. Native dialog methods were simulated in those tests; native focus behavior, animation, and the new layout still require browser verification after uploading. Local HTML, resources, anchors, and ARIA checks now cover 322 references across 10 pages. A local HTTP preview returned 200, but opening it in the preview panel was unavailable.
+## Additional checks
 
-The revised local files passed link, anchor, duplicate-ID, heading, image-alt, and ARIA-target checks (10 pages; 297 local references), plus JavaScript syntax validation. The changed files still need uploading to GitHub; the live-site checks above describe the version observed before this package was uploaded. New menu behavior and the headline correction require a final live recheck after upload. Browser screenshot capture timed out, so this is not a completed visual sign-off.
+Twenty-three simulated-DOM checks passed for the photo story, all nine gallery images, grade guidance, calendar date progression and filters, and official-domain behavior. Calendar checks included future dates and separating upcoming events from past events.
 
-## School decisions before the official launch
+All HTML pages and their local files, internal anchors, image alternatives, unique IDs, headings, and ARIA targets were checked. JavaScript syntax checks passed for all three script files. Local copies of the school's enrollment packet and calendar are included.
 
-Confirm current tuition, upper-grade offerings, and dates with the principal. Decide whether to keep the clearly labeled email composer, use the existing school form, or connect a new direct-submission service. Domain transfer and direct form integration have not been performed.
+## Deployment status
 
-When moving from the GitHub preview to another domain, update the full sharing-image URL and the 404 base URL in the HTML files. The README explains publishing and maintenance.
+This download contains the revised files. It does not change the GitHub repository or its live deployment automatically. Upload the extracted HTML and assets to publish this version, then confirm the live deployment and its resources loaded successfully.
+
+## School review
+
+The official website and 2026-27 packet were checked for tuition, contacts, beliefs, and school model. The enrollment banner is year-neutral because next-year enrollment information was not verified. No staff biography, testimonial, portrait, accreditation claim, or after-10th-grade pathway has been invented.
+
+The contact form remains a clearly labeled email composer. Direct backend submission and moving the school's domain have not been performed. Review and approve the school's content and contact workflow before launching on its official domain.
